@@ -1,0 +1,15 @@
+tool:
+  users:
+    user:
+      dotsync:
+        config:
+          - broot
+  dotsync:
+    users:
+      user:
+        dotsync:
+          config:
+            - broot
+    defaults:        # default tools whose config files should be synced
+      config:
+        - neofetch
