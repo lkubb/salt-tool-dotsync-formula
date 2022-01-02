@@ -1,6 +1,6 @@
 {%- from 'tool-dotsync/map.jinja' import dotsync %}
 
-{%- for user in dotsync.users | selectattr('dotconfig') | selectattr('dotsync.config') %}
+{%- for user in dotsync.users | selectattr('dotsync.config', 'defined') %}
   {%- for tool in user.dotsync.config %}
 {{ tool }} configuration is synced for user '{{ user.name }}':
   file.recurse:
