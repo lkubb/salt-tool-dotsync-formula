@@ -10,10 +10,10 @@
   {%- endif -%}
 {%- endfor -%}
 
-{%- do salt['defaults.merge'](users, dotsync.get('users', {})) -%}
+{%- do salt['defaults.merge'](users, dotsync.get('users', {}), merge_lists=True) -%} {#- merge, not replace default tools with user-specific ones -#}
 
 {#- update all user configuration for dotsync with its defaults -#}
-{%- do salt['defaults.merge'](users, mas.get('users', {}), merge_lists=True) -%} {#- merge, not replace default tools with user-specific ones -#}
+{%- do salt['defaults.update'](users, {'dotsync': dotsync.get('defaults', {})}) -%}
 
 {#- embed user information that will be reused (home, primary group, shell, paths) -#}
 {%- for user in users.keys() -%}
