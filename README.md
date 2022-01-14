@@ -65,3 +65,12 @@ tools:
 
 ## Todo
 - evaluate if syncing stuff in `.local/share` makes sense
+- add config syncing to folders not in XDG_CONFIG_HOME via
+
+  ```yaml
+  config:
+    - ssh: .ssh
+    - gnupg: .gnupg
+  ```
+## See also
+- https://github.com/blacs30/saltstack-config
