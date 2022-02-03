@@ -36,9 +36,16 @@ data: {{ salt['cmd.run']('[ -n "$XDG_DATA_HOME" ] && echo "${XDG_DATA_HOME}" || 
 state: {{ salt['cmd.run']('[ -n "$XDG_STATE_HOME" ] && echo "${XDG_STATE_HOME}" || echo "${HOME}/.local/state"', runas=user) }}
     {%- endload -%}
     {%- do users[user].update({'xdg': xdg}) -%}
-    {%- do users[user]['_dotsync'].update({'confdir': xdg.config ~ '/dotsync'}) -%}
+    {%- do users[user]['_dotsync'].update({
+        'confdir': xdg.config ~ '/',
+        'datadir': xdg.data ~ '/',
+    }) -%}
   {%- else -%}
-    {%- do users[user]['_dotsync'].update({'confdir': users[user].home}) -%}
+    {#- cheap hack for savages ;D #}
+    {%- do users[user]['_dotsync'].update({
+        'confdir': users[user].home ~ '/.',
+        'datadir': users[user].home ~ '/.',
+    }) -%}
   {%- endif -%}
 {%- endfor -%}
 

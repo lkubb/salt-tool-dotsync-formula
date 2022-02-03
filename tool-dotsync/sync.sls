@@ -4,7 +4,7 @@
   {%- for tool in user.dotsync.config %}
 {{ tool }} configuration is synced for user '{{ user.name }}':
   file.recurse:
-    - name: {{ user._dotsync.confdir }}
+    - name: {{ user._dotsync.confdir }}{{ tool }}
     - source:
       - salt://dotconfig/{{ user.name }}/{{ tool }}
       - salt://dotconfig/{{ tool }}
