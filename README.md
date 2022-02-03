@@ -8,7 +8,11 @@ Applying `tool-dotsync` will make sure the user's dotfiles are synced to the rep
 to the user's config dir as well as templates from
 - `salt://dotdata/<user>/<tool>` or
 - `salt://dotdata/<tool>`
-to the user's data dir. The target folder will not be cleaned by default (ie files in the target that are absent from the user's dotconfig will stay).
+to the user's data dir.
+
+You can also sync scripts from `salt://dotbin/<user>` or `salt://dotbin` to `$HOME/.local/bin` or a custom target.
+
+The target folder will not be cleaned by default (ie files in the target that are absent from the user's dotconfig will stay).
 
 ## Configuration
 ### Pillar
@@ -54,6 +58,9 @@ The following shows an example of `tool-dotsync` pillar configuration. Namespace
 user:
   xdg: true           # sync files into xdg dirs (XDG_CONFIG_HOME / XDG_DATA_HOME) by default
   dotsync:
+    # sync scripts etc to .local/bin or custom target
+    bin: true         # or list of exact names
+    bindir: .bin      # by default, bin files will be synced to $HOME/.local/bin. override that
     # sync config files from salt://dotconfig/<user>/<tool> or salt://dotconfig/<tool>
     config:
       - broot         # target folder: depending on user.xdg: XDG_CONFIG_HOME/broot or $HOME/.broot

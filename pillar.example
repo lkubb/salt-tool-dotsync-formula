@@ -3,6 +3,9 @@ tool:
     user:
       xdg: true           # sync files into xdg dirs (XDG_CONFIG_HOME / XDG_DATA_HOME) by default
       dotsync:
+        # sync scripts etc to .local/bin or custom target
+        bin: true         # or list of exact names
+        bindir: .bin      # by default, bin files will be synced to $HOME/.local/bin. override that
         # sync config files from salt://dotconfig/<user>/<tool> or salt://dotconfig/<tool>
         config:
           - broot         # target folder: depending on user.xdg: XDG_CONFIG_HOME/broot or $HOME/.broot

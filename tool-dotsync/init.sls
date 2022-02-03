@@ -1,3 +1,4 @@
 include:
+  - .bin
   - .config
   - .data
