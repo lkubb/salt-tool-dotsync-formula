@@ -1,2 +1,3 @@
 include:
-  - .sync
+  - .config
+  - .data
