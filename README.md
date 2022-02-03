@@ -1,11 +1,14 @@
 # `dotsync` Formula
-Syncs user configuration files from dotfiles repository.
+Syncs user configuration and data files from dotfiles repositories. This is for miscellaneous stuff that is not covered in one of the `tool-` formulae.
 
 ## Usage
 Applying `tool-dotsync` will make sure the user's dotfiles are synced to the repository. It will recursively apply templates from
 - `salt://dotconfig/<user>/<tool>` or
 - `salt://dotconfig/<tool>`
-to the user's config dir. The target folder will not be cleaned by default (ie files in the target that are absent from the user's dotconfig will stay).
+to the user's config dir as well as templates from
+- `salt://dotdata/<user>/<tool>` or
+- `salt://dotdata/<tool>`
+to the user's data dir. The target folder will not be cleaned by default (ie files in the target that are absent from the user's dotconfig will stay).
 
 ## Configuration
 ### Pillar
@@ -49,9 +52,16 @@ tool:
 The following shows an example of `tool-dotsync` pillar configuration. Namespace it to `tool:users` and/or `tool:dotsync:users`.
 ```yaml
 user:
+  xdg: true           # sync files into xdg dirs (XDG_CONFIG_HOME / XDG_DATA_HOME) by default
   dotsync:
+    # sync config files from salt://dotconfig/<user>/<tool> or salt://dotconfig/<tool>
     config:
-      - broot
+      - broot         # target folder: depending on user.xdg: XDG_CONFIG_HOME/broot or $HOME/.broot
+      - ssh: .ssh     # overrides target to $HOME/.ssh
+    # sync data files from salt://dotdata/<user>/<tool> or salt://dotconfig/<tool>
+    data:
+      - vim           # target folder: depending on user.xdg: XDG_DATA_HOME/vim or $HOME/.vim
+      - zsh: .my/zsh  # overrides target to $HOME/.my/zsh
 ```
 
 #### Formula-specific
@@ -64,13 +74,7 @@ tools:
 ```
 
 ## Todo
-- evaluate if syncing stuff in `.local/share` makes sense
-- add config syncing to folders not in XDG_CONFIG_HOME via
+Nothing atm.
 
-  ```yaml
-  config:
-    - ssh: .ssh
-    - gnupg: .gnupg
-  ```
 ## See also
 - https://github.com/blacs30/saltstack-config
