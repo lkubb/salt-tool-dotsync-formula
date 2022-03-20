@@ -15,7 +15,7 @@
       - salt://dotconfig/{{ user.name }}/{{ tool }}
       - salt://dotconfig/{{ tool }}
     - context:
-        user: {{ user }}
+        user: {{ user | json }}
     - template: jinja
     - user: {{ user.name }}
     - group: {{ user.group }}
