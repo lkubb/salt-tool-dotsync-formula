@@ -1,0 +1,26 @@
+# -*- coding: utf-8 -*-
+# vim: ft=yaml
+#
+# Set default values.
+---
+values:
+  lookup:
+    rootgroup: root
+    source_roots:
+      dotbin: dotbin
+      dotconfig: dotconfig
+      dotdata: dotdata
+  defaults:
+    bindir: .local/bin
+    dotbin:
+      file_mode: 'keep'
+      dir_mode: '0755'
+      clean: false
+    dotdata:
+      file_mode: '0644'
+      dir_mode: '0755'
+      clean: false
+  # Just here for testing
+  added_in_defaults: defaults_value
+  winner: defaults
+...
