@@ -1,20 +1,19 @@
-# -*- coding: utf-8 -*-
 # vim: ft=sls
 
-{%- set tplroot = tpldir.split('/')[0] %}
+{%- set tplroot = tpldir.split("/")[0] %}
 {%- from tplroot ~ "/map.jinja" import mapdata as dotsync with context %}
 {%- from tplroot ~ "/libtofs.jinja" import files_switch %}
 
 
-{%- for user in dotsync.users | selectattr('dotsync.bin', 'defined') | selectattr('dotsync.bin') %}
+{%- for user in dotsync.users | selectattr("dotsync.bin", "defined") | selectattr("dotsync.bin") %}
 {%-   if user.dotsync.bin is sameas true %}
 
 Executables are synced for user '{{ user.name }}':
   file.recurse:
     - name: {{ user._dotsync.bindir }}
     - source: {{ files_switch(
-                [''],
-                default_files_switch=['id', 'os_family'],
+                [""],
+                default_files_switch=["id", "os_family"],
                 override_root=dotsync.lookup.source_roots.dotbin,
                 opt_prefixes=[user.name]) }}
     - context:
@@ -34,7 +33,7 @@ Executables are synced for user '{{ user.name }}':
     - name: {{ user._dotsync.bindir | path_join(exe) }}
     - source: {{ files_switch(
                 [exe],
-                default_files_switch=['id', 'os_family'],
+                default_files_switch=["id", "os_family"],
                 override_root=dotsync.lookup.source_roots.dotbin,
                 opt_prefixes=[user.name]) }}
     - user: {{ user.name }}

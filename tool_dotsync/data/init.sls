@@ -1,12 +1,11 @@
-# -*- coding: utf-8 -*-
 # vim: ft=sls
 
-{%- set tplroot = tpldir.split('/')[0] %}
+{%- set tplroot = tpldir.split("/")[0] %}
 {%- from tplroot ~ "/map.jinja" import mapdata as dotsync with context %}
 {%- from tplroot ~ "/libtofs.jinja" import files_switch %}
 
 
-{%- for user in dotsync.users | selectattr('_dotsync.data') %}
+{%- for user in dotsync.users | selectattr("_dotsync.data") %}
 {%-   for tool, target in user._dotsync.data.items() %}
 
 {{ tool }} data is synced for user '{{ user.name }}':
@@ -14,7 +13,7 @@
     - name: {{ target }}
     - source: {{ files_switch(
                 [tool],
-                default_files_switch=['id', 'os_family'],
+                default_files_switch=["id", "os_family"],
                 override_root=dotsync.lookup.source_roots.dotdata,
                 opt_prefixes=[user.name]) }}
     - context:

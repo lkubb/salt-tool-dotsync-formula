@@ -1,11 +1,10 @@
-# -*- coding: utf-8 -*-
 # vim: ft=sls
 
-{%- set tplroot = tpldir.split('/')[0] %}
+{%- set tplroot = tpldir.split("/")[0] %}
 {%- from tplroot ~ "/map.jinja" import mapdata as dotsync with context %}
 
 
-{%- for user in dotsync.users | selectattr('dotsync.bin', 'defined') | selectattr('dotsync.bin') %}
+{%- for user in dotsync.users | selectattr("dotsync.bin", "defined") | selectattr("dotsync.bin") %}
 {%-   if user.dotsync.bin is sameas true %}
 
 Executables are synced for user '{{ user.name }}':
