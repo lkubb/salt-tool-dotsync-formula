@@ -8,7 +8,7 @@
 
 {%- set tplroot = tpldir.split("/")[0] %}
 {%- from tplroot ~ "/map.jinja" import mapdata as dotsync with context %}
-{%- from tplroot ~ "/libtofs.jinja" import files_switch %}
+{%- from tplroot ~ "/libtofsstack.jinja" import files_switch %}
 
 
 {%- for user in dotsync.users | selectattr("_dotsync.config") %}
@@ -19,10 +19,13 @@
   file.recurse:
     - name: {{ target }}
     - source: {{ files_switch(
-                [tool],
-                default_files_switch=["id", "os_family"],
-                override_root=dotsync.lookup.source_roots.dotconfig,
-                opt_prefixes=[user.name]) }}
+                    [tool],
+                    lookup="{} configuration is synced for user '{}'".format(tool, user.name),
+                    config=dotsync,
+                    path_prefix=dotsync.lookup.source_roots.dotconfig,
+                    custom_data={"users": [user.name]},
+                 )
+              }}
     - context:
         user: {{ user | json }}
     - template: jinja

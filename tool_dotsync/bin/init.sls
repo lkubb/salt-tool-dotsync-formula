@@ -2,7 +2,7 @@
 
 {%- set tplroot = tpldir.split("/")[0] %}
 {%- from tplroot ~ "/map.jinja" import mapdata as dotsync with context %}
-{%- from tplroot ~ "/libtofs.jinja" import files_switch %}
+{%- from tplroot ~ "/libtofsstack.jinja" import files_switch %}
 
 
 {%- for user in dotsync.users | selectattr("dotsync.bin", "defined") | selectattr("dotsync.bin") %}
@@ -12,10 +12,13 @@ Executables are synced for user '{{ user.name }}':
   file.recurse:
     - name: {{ user._dotsync.bindir }}
     - source: {{ files_switch(
-                [""],
-                default_files_switch=["id", "os_family"],
-                override_root=dotsync.lookup.source_roots.dotbin,
-                opt_prefixes=[user.name]) }}
+                    [""],
+                    lookup="Executables are synced for user '{}'".format(user.name),
+                    config=dotsync,
+                    path_prefix=dotsync.lookup.source_roots.dotbin,
+                    custom_data={"users": [user.name]},
+                 )
+              }}
     - context:
         user: {{ user | json }}
     - user: {{ user.name }}
@@ -32,10 +35,13 @@ Executables are synced for user '{{ user.name }}':
   file.managed:
     - name: {{ user._dotsync.bindir | path_join(exe) }}
     - source: {{ files_switch(
-                [exe],
-                default_files_switch=["id", "os_family"],
-                override_root=dotsync.lookup.source_roots.dotbin,
-                opt_prefixes=[user.name]) }}
+                    [exe],
+                    lookup="'{}' is synced to bin dir for user '{}'".format(exe, user.name),
+                    config=dotsync,
+                    path_prefix=dotsync.lookup.source_roots.dotbin,
+                    custom_data={"users": [user.name]},
+                 )
+              }}
     - user: {{ user.name }}
     - group: {{ user.group }}
     - file_mode: '{{ user.dotsync.dotbin.file_mode }}'
