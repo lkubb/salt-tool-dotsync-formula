@@ -16,6 +16,7 @@ Executables are synced for user '{{ user.name }}':
                     lookup="Executables are synced for user '{}'".format(user.name),
                     config=dotsync,
                     path_prefix=dotsync.lookup.source_roots.dotbin,
+                    files_dir="",
                     custom_data={"users": [user.name]},
                  )
               }}
@@ -39,6 +40,7 @@ Executables are synced for user '{{ user.name }}':
                     lookup="'{}' is synced to bin dir for user '{}'".format(exe, user.name),
                     config=dotsync,
                     path_prefix=dotsync.lookup.source_roots.dotbin,
+                    files_dir="",
                     custom_data={"users": [user.name]},
                  )
               }}

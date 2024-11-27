@@ -16,6 +16,7 @@
                     lookup="{} data is synced for user '{}'".format(tool, user.name),
                     config=dotsync,
                     path_prefix=dotsync.lookup.source_roots.dotdata,
+                    files_dir="",
                     custom_data={"users": [user.name]},
                  )
               }}
